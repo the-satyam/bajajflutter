@@ -11,12 +11,13 @@ void main() {
         centerTitle: true,
         backgroundColor: Colors.orange,
       ),
-      body: Center(child: Text('Hello World',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 35.0,
-        color: Colors.grey
-      ),)),
+      body: Center(
+          child: Text(
+        'Hello World',
+        style: TextStyle(
+          fontFamily: 'Antipasto',
+            fontWeight: FontWeight.bold, fontSize: 35.0, color: Colors.grey),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Text('Click Me'),
