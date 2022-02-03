@@ -1,28 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
+  runApp(const MyApp());
+}
+
+class RandomWords extends StatefulWidget {
+  const RandomWords({Key? key}) : super(key: key);
+
+  @override
+  _RandomWordsState createState() => _RandomWordsState();
+}
+
+class _RandomWordsState extends State<RandomWords> {
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'welcome to appbar',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.orange,
+        title: const Text('Startup Name Generator'),
       ),
-      body: Center(
-          child: Text(
-        'Hello World',
-        style: TextStyle(
-          fontFamily: 'Antipasto',
-            fontWeight: FontWeight.bold, fontSize: 35.0, color: Colors.grey),
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text('Click Me'),
-        backgroundColor: Colors.orange,
+      body: _buildSuggestions(),
+    );
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
       ),
-    ),
-  ));
+    );
+  }
+
+  Widget _buildSuggestions() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return const Divider();
+          /*2*/
+
+          final index = i ~/ 2; /*3*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          }
+          return _buildRow(_suggestions[index]);
+        });
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Startup Name Generator',
+      home: RandomWords(),
+    );
+  }
 }
